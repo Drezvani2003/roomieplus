@@ -1,7 +1,7 @@
-/* Roomie+ : phone-first styles. Fonts are bundled in fonts/ so the app works offline. */
-@font-face{font-family:"Bricolage Grotesque";src:url(fonts/bricolage-grotesque.woff2) format("woff2");font-weight:200 800;font-display:swap}
-@font-face{font-family:"Figtree";src:url(fonts/figtree.woff2) format("woff2");font-weight:300 900;font-display:swap}
-@font-face{font-family:"Spline Sans Mono";src:url(fonts/spline-sans-mono.woff2) format("woff2");font-weight:300 700;font-display:swap}
+/* Roomie+ : phone-first styles. Fonts are bundled with the app so the app works offline. */
+@font-face{font-family:"Bricolage Grotesque";src:url(bricolage-grotesque.woff2) format("woff2");font-weight:200 800;font-display:swap}
+@font-face{font-family:"Figtree";src:url(figtree.woff2) format("woff2");font-weight:300 900;font-display:swap}
+@font-face{font-family:"Spline Sans Mono";src:url(spline-sans-mono.woff2) format("woff2");font-weight:300 700;font-display:swap}
 html{-webkit-text-size-adjust:100%;color-scheme:light}
 body{margin:0}
 img{max-width:100%}

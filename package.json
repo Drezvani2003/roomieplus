@@ -4,8 +4,8 @@
   "private": true,
   "description": "Roomie+: receipts, debts, shopping list and a fair cleaning schedule for roommates. Installable web app.",
   "scripts": {
-    "build": "esbuild src/firebase-adapter.js --bundle --minify --format=iife --target=es2020 --outfile=public/sync.js",
-    "test": "node test/worker.test.mjs"
+    "build": "esbuild firebase-adapter.js --bundle --minify --format=iife --target=es2020 --outfile=sync.js",
+    "test": "node worker.test.mjs"
   },
   "dependencies": {
     "firebase": "10.12.2"

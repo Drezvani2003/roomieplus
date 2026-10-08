@@ -1,4 +1,4 @@
-import worker from '../public/_worker.js';
+import worker from './_worker.js';
 const ASSETS = { fetch: async () => new Response('asset') };
 const call = (method, { env = {}, origin, body } = {}) => worker.fetch(new Request('https://roomie.example/api/scan', { method, headers: origin ? { Origin: origin, 'content-type': 'application/json' } : {}, body }), { ASSETS, ...env });
 const show = async (label, r) => console.log(label, r.status, await r.text());

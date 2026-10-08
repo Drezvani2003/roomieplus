@@ -6,7 +6,9 @@ Splitwise is built for friend groups and trips. Roomie+ is built for people who 
 
 It is an installable web app (PWA): add it to your home screen and it opens full screen with its own icon, works offline, and syncs between roommates.
 
-![Roomie+ screens: monthly tally, shopping list, cleaning calendar and a roommate's debts](docs/screenshots/overview.png)
+**[Try the live demo on your phone →](https://drezvani2003.github.io/roomieplus/)**
+
+![Roomie+ screens: monthly tally, shopping list, cleaning calendar and a roommate's debts](overview.png)
 
 ## What it does
 
@@ -66,25 +68,25 @@ flowchart LR
 - **Sync:** Firebase Firestore with anonymous sign-in. Each household lives under a long random code that doubles as the invite link.
 - **Receipt reading:** a small Cloudflare Pages worker sends photos to the Claude API, so the API key never reaches a phone.
 - **Offline:** a service worker caches the app; Firestore queues changes and syncs when the phone is back online.
-- **Without any backend** the app still runs, storing everything on one phone. That is how the live demo works.
+- **Without any backend** the app still runs, storing everything on one phone. That is how the [live demo](https://drezvani2003.github.io/roomieplus/) works.
 
 ## Run it
 
 ```bash
-npx serve public          # or any static file server
+npx serve .               # or any static file server
 ```
 
 Open it on your phone or in a narrow browser window. With no settings it runs in on-phone mode.
 
 To run it for real with sync and receipt scanning, follow **[DEPLOY.md](DEPLOY.md)**. It takes about 20 minutes and uses the free tiers of Cloudflare Pages and Firebase, plus a pay-per-use Claude API key for scanning.
 
-Developer commands: `npm install`, `npm run build` (rebuilds `public/sync.js` from `src/firebase-adapter.js`), `npm test` (scan-server checks).
+Developer commands: `npm install`, `npm run build` (rebuilds `sync.js` from `firebase-adapter.js`), `npm test` (scan-server checks).
 
 ## More screens
 
 | Setup | Splitting a receipt | Dark mode |
 |---|---|---|
-| ![Setup: how long you'll live together](docs/screenshots/0-setup.png) | ![Tagging receipt lines](docs/screenshots/5-receipt.png) | ![Cal in dark mode](docs/screenshots/6-cal-dark.png) |
+| ![Setup: how long you'll live together](0-setup.png) | ![Tagging receipt lines](5-receipt.png) | ![Cal in dark mode](6-cal-dark.png) |
 
 ## Status and next steps
 

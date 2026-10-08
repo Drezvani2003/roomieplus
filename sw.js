@@ -1,8 +1,8 @@
 // Roomie+ service worker: keeps a copy of the app on the phone so it opens without a connection.
 // Online, it always fetches the newest files first, so a new upload shows up on the next open.
-const CACHE = 'roomieplus-v1';
+const CACHE = 'roomieplus-v2';
 const SHELL = ['./', 'styles.css', 'app.js', 'config.js', 'sync.js', 'manifest.webmanifest',
-  'icons/icon-192.png', 'fonts/bricolage-grotesque.woff2', 'fonts/figtree.woff2', 'fonts/spline-sans-mono.woff2'];
+  'icon-192.png', 'bricolage-grotesque.woff2', 'figtree.woff2', 'spline-sans-mono.woff2'];
 
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => Promise.all(SHELL.map(u => c.add(u).catch(() => {})))).then(() => self.skipWaiting()));
