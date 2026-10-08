@@ -1,0 +1,22 @@
+import worker from '../public/_worker.js';
+const ASSETS = { fetch: async () => new Response('asset') };
+const call = (method, { env = {}, origin, body } = {}) => worker.fetch(new Request('https://roomie.example/api/scan', { method, headers: origin ? { Origin: origin, 'content-type': 'application/json' } : {}, body }), { ASSETS, ...env });
+const show = async (label, r) => console.log(label, r.status, await r.text());
+await show('GET no key   ', await call('GET'));
+await show('GET with key ', await call('GET', { env: { ANTHROPIC_API_KEY: 'k' } }));
+await show('POST no origin', await call('POST', { env: { ANTHROPIC_API_KEY: 'k' }, body: '{}' }));
+await show('POST other origin', await call('POST', { env: { ANTHROPIC_API_KEY: 'k' }, origin: 'https://evil.example', body: '{}' }));
+await show('POST no key  ', await call('POST', { origin: 'https://roomie.example', body: '{"images":["aGk="]}' }));
+await show('POST no images', await call('POST', { env: { ANTHROPIC_API_KEY: 'k' }, origin: 'https://roomie.example', body: '{"images":[]}' }));
+await show('POST bad b64 ', await call('POST', { env: { ANTHROPIC_API_KEY: 'k' }, origin: 'https://roomie.example', body: '{"images":["<script>"]}' }));
+// canned Claude answer
+const realFetch = globalThis.fetch; let sent;
+globalThis.fetch = async (u, init) => { sent = { u, headers: init.headers, body: JSON.parse(init.body) }; return new Response(JSON.stringify({ content: [{ type: 'text', text: 'Here you go:\n```json\n{"store":"Corner Grocer","date":"2026-10-07","items":[{"name":"Milk","price":5.49,"taxed":false}],"tax":0,"total":5.49}\n```' }] })); };
+await show('POST ok      ', await call('POST', { env: { ANTHROPIC_API_KEY: 'k' }, origin: 'https://roomie.example', body: '{"images":["aGk=","aGk="],"today":"2026-10-07"}' }));
+console.log('sent to', sent.u, '| model', sent.body.model, '| blocks', sent.body.messages[0].content.map(b => b.type).join(','), '| version', sent.headers['anthropic-version'], '| prompt starts:', sent.body.messages[0].content.at(-1).text.slice(0, 40));
+globalThis.fetch = async () => new Response(JSON.stringify({ content: [{ type: 'text', text: '{"error":"not_a_receipt"}' }] }));
+await show('POST not receipt', await call('POST', { env: { ANTHROPIC_API_KEY: 'k' }, origin: 'https://roomie.example', body: '{"images":["aGk="]}' }));
+globalThis.fetch = async () => new Response('{}', { status: 401 });
+await show('POST bad key ', await call('POST', { env: { ANTHROPIC_API_KEY: 'k' }, origin: 'https://roomie.example', body: '{"images":["aGk="]}' }));
+globalThis.fetch = realFetch;
+const other = await worker.fetch(new Request('https://roomie.example/app.js'), { ASSETS }); console.log('static', await other.text());

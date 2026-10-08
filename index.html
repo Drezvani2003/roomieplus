@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Roomie+</title>
+<meta name="description" content="Split receipts and debts, keep a shared shopping list, and run a fair cleaning schedule with the people you live with.">
+<meta name="theme-color" content="#E4E9E6" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#13171B" media="(prefers-color-scheme: dark)">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Roomie+">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="app">
+  <header class="top" id="top" hidden>
+    <div class="bar">
+      <div class="mark">roomie<span>+</span></div>
+      <div class="todayline" id="todayline"></div>
+      <button type="button" class="mebtn" id="meBtn" data-act="myprofile" aria-label="Your profile"></button>
+    </div>
+    <nav class="rail" id="months" aria-label="Months of your stay"></nav>
+    <nav class="rail" id="days" aria-label="Days of the month"></nav>
+  </header>
+  <main id="screen"></main>
+</div>
+<button type="button" class="fab wr" id="fab" data-act="add" aria-label="Add a receipt" hidden>+</button>
+<nav class="tabbar" id="tabbar" hidden>
+  <button type="button" class="tab" data-act="tab" data-v="month"><svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15" rx="1.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>Cal</button>
+  <button type="button" class="tab" data-act="tab" data-v="debts"><svg viewBox="0 0 24 24"><path d="M4 8h14l-3-3M20 16H6l3 3"/></svg>Debts<span class="pip" id="pip" hidden></span></button>
+  <button type="button" class="tab" data-act="tab" data-v="list"><svg viewBox="0 0 24 24"><path d="M4 6.5l1.5 1.5L8 5.5M4 12.5l1.5 1.5L8 11.5M4 18.5l1.5 1.5L8 17.5M11.5 7h8.5M11.5 13h8.5M11.5 19h8.5"/></svg>List</button>
+  <button type="button" class="tab" data-act="tab" data-v="clean"><svg viewBox="0 0 24 24"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8zM18.5 15.5l.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8z"/></svg>Clean<span class="pip" id="pip2" hidden></span></button>
+  <button type="button" class="tab" data-act="tab" data-v="house"><svg viewBox="0 0 24 24"><path d="M4 11l8-7 8 7v9H4zM10 20v-6h4v6"/></svg>House</button>
+</nav>
+<div class="sheet" id="sheet" inert></div>
+<div id="toast" role="status" hidden></div>
+<script src="config.js"></script>
+<script src="app.js"></script>
+<script>
+if ('serviceWorker' in navigator) window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
+</script>
+</body>
+</html>

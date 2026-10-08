@@ -1,0 +1,11 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Each household's data lives under its long random code. Only apps that have signed in
+    // (Roomie+ does this silently) and know a household's code can read or change that household.
+    // Nobody can list households or search across them.
+    match /households/{code}/{collection}/{docId} {
+      allow read, write: if request.auth != null && code.size() >= 16;
+    }
+  }
+}
